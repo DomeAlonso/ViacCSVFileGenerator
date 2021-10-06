@@ -1,3 +1,4 @@
+package extractor;
 
 import model.DepotTransaktion;
 import model.Document;
@@ -9,59 +10,27 @@ import java.util.regex.Pattern;
 
 public class TextExtractor {
     String text;
-    Document document;
-
+    OrderType typ;
 
     public TextExtractor(String text) throws Exception {
         this.text = text;
-
-
-
-
-        OrderType typ = getTyp();
+        typ = getTyp();
 
         if (typ == null){
             throw new Exception("Order typ not supported");
         }
-        switch(typ){
-            case KAUF:
-            case VERKAUF:
-                document = new DepotTransaktion();
-                ((DepotTransaktion) document).setOrderType(typ);
-                ((DepotTransaktion) document).setPortfolio(getPortfolio());
-                ((DepotTransaktion) document).setIsin(getISIN());
-                ((DepotTransaktion) document).setAktienkurs(getAktienKurs());
-                ((DepotTransaktion) document).setKursWaehrung(getKursWaehrung());
-                ((DepotTransaktion) document).setBetrag(getBruttobetrag());
-                ((DepotTransaktion) document).setBetragsWaehrung(getWaehrungBruttobetrag());
-                ((DepotTransaktion) document).setUmrechnungskurs(getWechselkurs());
-                ((DepotTransaktion) document).setSteuern((getSteuern()));
-                ((DepotTransaktion) document).setGebuehren((getGebuehren()));
-                ((DepotTransaktion) document).setValutaDatum(getDatum());
-                ((DepotTransaktion) document).setVerrechneterBetrag(getVerrechneterBetrag());
-                ((DepotTransaktion) document).setBuchungsWaehrung(getBuchungswaehrung());
-                ((DepotTransaktion) document).setAnzahl(getAnzahl());
-                break;
-            case EINLAGE:
-                document = new KontoTransaktion();
-                document.setOrderType(typ);
-                document.setPortfolio(getPortfolio());
-                document.setValutaDatum(getDatum());
-                document.setVerrechneterBetrag(getVerrechneterBetrag());
-                document.setBuchungsWaehrung(getBuchungswaehrung());
-                break;
-        }
-
-
-
-
     }
 
     /**
      * Valuta
      */
     public String getDatum() {
-        String pattern = "(?<=Valuta )\\d{2}.\\d{2}.\\d{4}";
+        String pattern;
+        if (getTyp().equals(OrderType.ZINS)){
+            pattern = "(?<=Am )\\d{2}.\\d{2}.\\d{4}(?= haben wir )";
+        }else {
+            pattern = "(?<=Valuta )\\d{2}.\\d{2}.\\d{4}";
+        }
         return searchRegex(pattern);
     }
 
@@ -85,6 +54,8 @@ public class TextExtractor {
             if (typ!=null) {
                 if (typ.equals("Einzahlung 3a")){
                     return OrderType.EINLAGE;
+                }else if(typ.equals("Zins")){
+                    return OrderType.ZINS;
                 }
             }
         }
@@ -127,7 +98,7 @@ public class TextExtractor {
     /**
      * Umrechungskurs
      */
-    public String getWechselkurs() throws Exception {
+    public String getWechselkurs() {
         String pattern = "(?<=Umrechnungskurs.{9})[0-9'.]*";
         return searchRegex(pattern);
     }
@@ -173,14 +144,14 @@ public class TextExtractor {
     /**
      * Last two digits of portfolio
      */
-    public String getPortfolio() throws Exception {
+    public String getPortfolio() {
         String pattern ="(?<=Portfolio.{15})\\d*";
         return searchRegex(pattern);
     }
 
 
 
-    private String searchRegex(String pattern) {
+    String searchRegex(String pattern) {
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);
 
@@ -200,6 +171,39 @@ public class TextExtractor {
 
 
     public Document getdocument() {
+        Document document;
+        switch(typ){
+            case KAUF:
+            case VERKAUF:
+                document = new DepotTransaktion();
+                ((DepotTransaktion) document).setOrderType(typ);
+                ((DepotTransaktion) document).setPortfolio(getPortfolio());
+                ((DepotTransaktion) document).setIsin(getISIN());
+                ((DepotTransaktion) document).setAktienkurs(getAktienKurs());
+                ((DepotTransaktion) document).setKursWaehrung(getKursWaehrung());
+                ((DepotTransaktion) document).setBetrag(getBruttobetrag());
+                ((DepotTransaktion) document).setBetragsWaehrung(getWaehrungBruttobetrag());
+                ((DepotTransaktion) document).setUmrechnungskurs(getWechselkurs());
+                ((DepotTransaktion) document).setSteuern((getSteuern()));
+                ((DepotTransaktion) document).setGebuehren((getGebuehren()));
+                ((DepotTransaktion) document).setValutaDatum(getDatum());
+                ((DepotTransaktion) document).setVerrechneterBetrag(getVerrechneterBetrag());
+                ((DepotTransaktion) document).setBuchungsWaehrung(getBuchungswaehrung());
+                ((DepotTransaktion) document).setAnzahl(getAnzahl());
+                break;
+            case EINLAGE:
+            case ZINS:
+                document = new KontoTransaktion();
+                document.setOrderType(typ);
+                document.setPortfolio(getPortfolio());
+                document.setValutaDatum(getDatum());
+                document.setVerrechneterBetrag(getVerrechneterBetrag());
+                document.setBuchungsWaehrung(getBuchungswaehrung());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + typ);
+        }
+
         return document;
     }
 }

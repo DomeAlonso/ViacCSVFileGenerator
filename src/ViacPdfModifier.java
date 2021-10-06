@@ -1,3 +1,5 @@
+import extractor.TextExtractor;
+import extractor.TextExtractorZins;
 import model.DepotTransaktion;
 import model.Document;
 import model.KontoTransaktion;
@@ -51,6 +53,11 @@ public class ViacPdfModifier {
                        break;
                    case EINLAGE:
                        portfolios.get(0).writeKontoTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
+                       break;
+                   case ZINS:
+                       document = new TextExtractorZins(pdfText).getdocument();
+                       portfolios.get(0).writeKontoTransaction((KontoTransaktion) document, "Zins Portfolio "+document.getPortfolio()+". ");
+                       break;
                }
 
            }catch (Exception e){

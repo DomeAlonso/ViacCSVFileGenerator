@@ -1,9 +1,13 @@
 package model;
 
+/**
+ * Enum containing the different document/transaction Types.
+ */
 public enum OrderType {
     KAUF("Kauf"),
     VERKAUF("Verkauf"),
-    EINLAGE("Einlage");
+    EINLAGE("Einlage"),
+    ZINS("Zinsen");
 
     private String typ;
     OrderType(String typ) {
