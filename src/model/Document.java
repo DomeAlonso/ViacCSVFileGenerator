@@ -3,9 +3,13 @@ package model;
 public abstract class Document {
     private String portfolio;
     private String valutaDatum;
+    private double anzahl;
     private OrderType orderType;
     private String verrechneterBetrag;
     private String buchungsWaehrung;
+    private String steuern;
+    private String gebuehren;
+    private String isin;
 
     public String getPortfolio() {
         return portfolio;
@@ -21,6 +25,14 @@ public abstract class Document {
 
     public void setValutaDatum(String valutaDatum) {
         this.valutaDatum = valutaDatum;
+    }
+
+    public double getAnzahl() {
+        return anzahl;
+    }
+
+    public void setAnzahl(double anzahl) {
+        this.anzahl = anzahl;
     }
 
     public OrderType getOrderType() {
@@ -45,5 +57,29 @@ public abstract class Document {
 
     public void setBuchungsWaehrung(String buchungsWaehrung) {
         this.buchungsWaehrung = buchungsWaehrung;
+    }
+
+    public String getSteuern() {
+        return steuern;
+    }
+
+    public void setSteuern(String steuern) {
+        this.steuern = steuern;
+    }
+
+    public String getGebuehren() {
+        return gebuehren;
+    }
+
+    public void setGebuehren(String gebuehren) {
+        this.gebuehren = gebuehren;
+    }
+
+    public String getIsin() {
+        return isin;
+    }
+
+    public void setIsin(String isin) {
+        this.isin = isin;
     }
 }

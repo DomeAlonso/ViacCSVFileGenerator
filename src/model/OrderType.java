@@ -2,7 +2,8 @@ package model;
 
 public enum OrderType {
     KAUF("Kauf"),
-    VERKAUF("Verkauf");
+    VERKAUF("Verkauf"),
+    EINLAGE("Einlage");
 
     private String typ;
     OrderType(String typ) {

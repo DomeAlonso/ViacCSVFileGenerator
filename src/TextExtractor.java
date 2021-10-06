@@ -1,6 +1,7 @@
 
 import model.DepotTransaktion;
 import model.Document;
+import model.KontoTransaktion;
 import model.OrderType;
 
 import java.util.regex.Matcher;
@@ -27,6 +28,7 @@ public class TextExtractor {
             case VERKAUF:
                 document = new DepotTransaktion();
                 ((DepotTransaktion) document).setOrderType(typ);
+                ((DepotTransaktion) document).setPortfolio(getPortfolio());
                 ((DepotTransaktion) document).setIsin(getISIN());
                 ((DepotTransaktion) document).setAktienkurs(getAktienKurs());
                 ((DepotTransaktion) document).setKursWaehrung(getKursWaehrung());
@@ -39,6 +41,14 @@ public class TextExtractor {
                 ((DepotTransaktion) document).setVerrechneterBetrag(getVerrechneterBetrag());
                 ((DepotTransaktion) document).setBuchungsWaehrung(getBuchungswaehrung());
                 ((DepotTransaktion) document).setAnzahl(getAnzahl());
+                break;
+            case EINLAGE:
+                document = new KontoTransaktion();
+                document.setOrderType(typ);
+                document.setPortfolio(getPortfolio());
+                document.setValutaDatum(getDatum());
+                document.setVerrechneterBetrag(getVerrechneterBetrag());
+                document.setBuchungsWaehrung(getBuchungswaehrung());
                 break;
         }
 
@@ -61,12 +71,21 @@ public class TextExtractor {
     public OrderType getTyp() {
         String pattern = "(?<=Order: )\\w*";
         String typ = searchRegex(pattern);
+
         if(typ != null){
             if (typ.equals("Kauf")){
                 return OrderType.KAUF;
             }
             else if (typ.equals("Verkauf")){
                 return OrderType.VERKAUF;
+            }
+        }else{
+            pattern = "(?<=Basel, .{10}\\r\\n).*";
+            typ = searchRegex(pattern);
+            if (typ!=null) {
+                if (typ.equals("Einzahlung 3a")){
+                    return OrderType.EINLAGE;
+                }
             }
         }
         return null;
@@ -76,7 +95,7 @@ public class TextExtractor {
      * Verrechneter Betrag (CHF)
      */
     public String getVerrechneterBetrag() {
-        String pattern = "(?<=Verrechneter Betrag: Valuta .{15})[0-9'.]*";
+        String pattern = "(?<=Valuta .{15})[0-9'.]*";
         return searchRegex(pattern);
     }
 
@@ -85,7 +104,7 @@ public class TextExtractor {
      * @return
      */
     public String getBuchungswaehrung() {
-        String pattern = "(?<=Verrechneter Betrag: Valuta .{11})\\w{3}";
+        String pattern = "(?<=Valuta .{11})\\w{3}";
         return searchRegex(pattern);
     }
 

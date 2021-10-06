@@ -1,5 +1,6 @@
 import model.DepotTransaktion;
 import model.Document;
+import model.KontoTransaktion;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,24 +42,17 @@ public class ViacPdfModifier {
                System.out.println("Handling file: "+file.getAbsolutePath()+"\n");
                pdfText = VIACReader.readFile(file);
                TextExtractor extractor = new TextExtractor(pdfText);
+
                Document document = extractor.getdocument();
-               portfolios.get(Integer.parseInt(extractor.getPortfolio())).writeDepotTransaction((DepotTransaktion) document);
+               switch (document.getOrderType()){
+                   case VERKAUF:
+                   case KAUF:
+                       portfolios.get(Integer.parseInt(document.getPortfolio())).writeDepotTransaction((DepotTransaktion) document);
+                       break;
+                   case EINLAGE:
+                       portfolios.get(0).writeKontoTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
+               }
 
-              /* int index = Integer.parseInt(extractor.getPortfolio());
-
-               portfolios.get(index).writeFile(
-                       extractor.getDatum(),
-                       extractor.getTyp(),
-                       extractor.getWert(),
-                       extractor.getBuchungswaehrung(),
-                       extractor.getBruttobetrag(),
-                       extractor.getWaehrungBruttobetrag(),
-                       extractor.getWechselkurs(),
-                       extractor.getGebühren(),
-                       extractor.getSteuern(),
-                       extractor.calculateStueck(Double.parseDouble(extractor.getBruttobetrag()),Double.parseDouble(extractor.getKurs().replaceAll("'",""))),
-                       extractor.getISIN()
-               );*/
            }catch (Exception e){
                 errorString = errorString.append("Failed to parse file "+file.getName() +" ("+e.getMessage()+")\n");
                System.out.println("Parsed file:\n"+ pdfText+"\n\n");
