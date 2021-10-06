@@ -1,3 +1,6 @@
+import model.DepotTransaktion;
+import model.Document;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ public class ViacPdfModifier {
    public static void main(String args[]) throws IOException {
 
        StringBuilder errorString = new StringBuilder();
+       String pdfText = null;
 
        //Initialize CSV Export
        ArrayList<CSVWriter> portfolios = new ArrayList<>();
@@ -35,10 +39,12 @@ public class ViacPdfModifier {
        for (File file: pdfFiles) {
            try{
                System.out.println("Handling file: "+file.getAbsolutePath()+"\n");
-               String text = VIACReader.readFile(file);
-               TextExtractor extractor = new TextExtractor(text);
+               pdfText = VIACReader.readFile(file);
+               TextExtractor extractor = new TextExtractor(pdfText);
+               Document document = extractor.getdocument();
+               portfolios.get(Integer.parseInt(extractor.getPortfolio())).writeDepotTransaction((DepotTransaktion) document);
 
-               int index = Integer.parseInt(extractor.getPortfolio());
+              /* int index = Integer.parseInt(extractor.getPortfolio());
 
                portfolios.get(index).writeFile(
                        extractor.getDatum(),
@@ -52,9 +58,10 @@ public class ViacPdfModifier {
                        extractor.getSteuern(),
                        extractor.calculateStueck(Double.parseDouble(extractor.getBruttobetrag()),Double.parseDouble(extractor.getKurs().replaceAll("'",""))),
                        extractor.getISIN()
-               );
+               );*/
            }catch (Exception e){
-                errorString = errorString.append("Failed to parse file "+file.getName() +"("+e.getMessage()+")\n");
+                errorString = errorString.append("Failed to parse file "+file.getName() +" ("+e.getMessage()+")\n");
+               System.out.println("Parsed file:\n"+ pdfText+"\n\n");
                 e.printStackTrace();
            }
        }
