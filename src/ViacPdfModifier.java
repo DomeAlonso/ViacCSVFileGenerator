@@ -1,8 +1,10 @@
 import extractor.TextExtractor;
+import extractor.TextExtractorDividende;
 import extractor.TextExtractorZins;
 import model.DepotTransaktion;
 import model.Document;
 import model.KontoTransaktion;
+import model.KontoTransaktionDividende;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,19 +46,29 @@ public class ViacPdfModifier {
                System.out.println("Handling file: "+file.getAbsolutePath()+"\n");
                pdfText = VIACReader.readFile(file);
                TextExtractor extractor = new TextExtractor(pdfText);
+               Document document;
 
-               Document document = extractor.getdocument();
-               switch (document.getOrderType()){
+               switch (extractor.getTyp()){
                    case VERKAUF:
                    case KAUF:
-                       portfolios.get(Integer.parseInt(document.getPortfolio())).writeDepotTransaction((DepotTransaktion) document);
+                       document = extractor.getdocument();
+                       portfolios.get(Integer.parseInt(document.getPortfolio())).writeTransaction((DepotTransaktion) document,"");
                        break;
                    case EINLAGE:
-                       portfolios.get(0).writeKontoTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
+                       document = extractor.getdocument();
+                       portfolios.get(0).writeTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
                        break;
                    case ZINS:
                        document = new TextExtractorZins(pdfText).getdocument();
-                       portfolios.get(0).writeKontoTransaction((KontoTransaktion) document, "Zins Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(0).writeTransaction((KontoTransaktion) document, "Zins Portfolio "+document.getPortfolio()+". ");
+                       break;
+                   case VERWALTUNGSGEBUEHREN:
+                       document = extractor.getdocument();
+                       portfolios.get(0).writeTransaction((KontoTransaktion) document, "Verwaltungsgebühren Portfolio "+document.getPortfolio()+". ");
+                       break;
+                   case DIVIDENDE:
+                       document = new TextExtractorDividende(pdfText).getdocument();
+                       portfolios.get(0).writeTransaction((KontoTransaktionDividende) document, "Dividende Portfolio "+document.getPortfolio()+". ");
                        break;
                }
 

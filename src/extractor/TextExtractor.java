@@ -1,9 +1,6 @@
 package extractor;
 
-import model.DepotTransaktion;
-import model.Document;
-import model.KontoTransaktion;
-import model.OrderType;
+import model.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +53,14 @@ public class TextExtractor {
                     return OrderType.EINLAGE;
                 }else if(typ.equals("Zins")){
                     return OrderType.ZINS;
+                }else if(typ.equals("Belastung")){
+                    return OrderType.VERWALTUNGSGEBUEHREN;
                 }
+            }
+            pattern = "Dividendenausschüttung(?=\\r\\nWir haben für Sie)";
+            typ = searchRegex(pattern);
+            if (typ!=null && typ.equals("Dividendenausschüttung")){
+                return OrderType.DIVIDENDE;
             }
         }
         return null;
@@ -66,7 +70,7 @@ public class TextExtractor {
      * Verrechneter Betrag (CHF)
      */
     public String getVerrechneterBetrag() {
-        String pattern = "(?<=Valuta .{15})[0-9'.]*";
+        String pattern = "(?<=Valuta .{15}).[0-9'.]*";
         return searchRegex(pattern);
     }
 
@@ -164,11 +168,10 @@ public class TextExtractor {
         }
     }
 
-    private double getAnzahl(){
-        return Double.parseDouble(getBruttobetrag().replaceAll("'","")) /
-                Double.parseDouble(getAktienKurs().replaceAll("'",""));
+    public float getAnzahl(){
+        return Float.valueOf(getBruttobetrag().replaceAll("'","")) /
+                Float.valueOf(getAktienKurs().replaceAll("'",""));
     }
-
 
     public Document getdocument() {
         Document document;
@@ -192,13 +195,21 @@ public class TextExtractor {
                 ((DepotTransaktion) document).setAnzahl(getAnzahl());
                 break;
             case EINLAGE:
-            case ZINS:
+            case VERWALTUNGSGEBUEHREN:
                 document = new KontoTransaktion();
                 document.setOrderType(typ);
                 document.setPortfolio(getPortfolio());
                 document.setValutaDatum(getDatum());
                 document.setVerrechneterBetrag(getVerrechneterBetrag());
                 document.setBuchungsWaehrung(getBuchungswaehrung());
+                break;
+            case ZINS:
+                document = new KontoTransaktion();
+                document.getOrderType();
+                break;
+            case DIVIDENDE:
+                document = new KontoTransaktionDividende();
+                document.getOrderType();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + typ);

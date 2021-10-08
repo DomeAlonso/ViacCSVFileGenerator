@@ -3,7 +3,7 @@ package model;
 public abstract class Document {
     private String portfolio;
     private String valutaDatum;
-    private double anzahl;
+    private float anzahl;
     private OrderType orderType;
     private String verrechneterBetrag;
     private String buchungsWaehrung;
@@ -31,7 +31,7 @@ public abstract class Document {
         return anzahl;
     }
 
-    public void setAnzahl(double anzahl) {
+    public void setAnzahl(float anzahl) {
         this.anzahl = anzahl;
     }
 

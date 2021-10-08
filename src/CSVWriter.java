@@ -1,9 +1,13 @@
 import model.DepotTransaktion;
 import model.KontoTransaktion;
+import model.KontoTransaktionDividende;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.StringJoiner;
 
 public class CSVWriter {
@@ -14,11 +18,11 @@ public class CSVWriter {
         try {
             File csvFile = new File("Portfolio "+portfolio+".csv");
             fileWriter = new FileWriter(csvFile);
-            if (portfolio.equals("Abrechnungskonto")){
+            /*if (portfolio.equals("Abrechnungskonto")){
                 fileWriter.write("Datum,Typ,Wert,Buchungswährung,Steuern,Stück,ISIN,Notiz");
-            }else{
+            }else{*/
                 fileWriter.write("Datum,Typ,Wert,Buchungswährung,Bruttobetrag,Währung Bruttobetrag,Wechselkurs,Gebühren,Steuern,Stück,ISIN,Notiz");
-            }
+            //}
             fileWriter.write("\n");
             fileWriter.flush();
         } catch (IOException e) {
@@ -26,7 +30,7 @@ public class CSVWriter {
         }
     }
 
-    public void writeDepotTransaction(DepotTransaktion doc) {
+    public void writeTransaction(DepotTransaktion doc, String notiz) {
         StringJoiner joiner = new StringJoiner(",");
         try{
             joiner.
@@ -41,7 +45,7 @@ public class CSVWriter {
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
-                    add("Generiert von VIAC PDF Modifier");
+                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
 
             fileWriter.write(joiner.toString().replaceAll("null",""));
             fileWriter.write("\n");
@@ -52,7 +56,7 @@ public class CSVWriter {
 
     }
 
-    public void writeKontoTransaction(KontoTransaktion doc, String notiz) {
+    public void writeTransaction(KontoTransaktion doc, String notiz) {
         StringJoiner joiner = new StringJoiner(",");
         try{
             joiner.
@@ -60,6 +64,10 @@ public class CSVWriter {
                     add(doc.getOrderType().toString()).
                     add(doc.getVerrechneterBetrag()).
                     add(doc.getBuchungsWaehrung()).
+                    add("").
+                    add("").
+                    add("").
+                    add("").
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
@@ -72,5 +80,30 @@ public class CSVWriter {
             e.printStackTrace();
         }
 
+    }
+
+    public void writeTransaction(KontoTransaktionDividende doc,String notiz){
+        StringJoiner joiner = new StringJoiner(",");
+        try{
+            joiner.
+                    add(doc.getValutaDatum()).
+                    add(doc.getOrderType().toString()).
+                    add(doc.getVerrechneterBetrag()).
+                    add(doc.getBuchungsWaehrung()).
+                    add(doc.getBetrag()).
+                    add(doc.getBetragsWaehrung()).
+                    add(doc.getUmrechnungskurs()).
+                    add(doc.getGebuehren()).
+                    add(doc.getSteuern()).
+                    add(String.valueOf(doc.getAnzahl())).
+                    add(doc.getIsin()).
+                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
+
+            fileWriter.write(joiner.toString().replaceAll("null",""));
+            fileWriter.write("\n");
+            fileWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
