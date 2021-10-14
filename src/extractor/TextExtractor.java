@@ -71,8 +71,10 @@ public class TextExtractor {
      */
     public String getVerrechneterBetrag() {
         String pattern = "(?<=Valuta .{15}).[0-9'.]*";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
+
 
     /**
      * Währung Verrechneter Betrag (CHF)
@@ -80,7 +82,8 @@ public class TextExtractor {
      */
     public String getBuchungswaehrung() {
         String pattern = "(?<=Valuta .{11})\\w{3}";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     /**
@@ -88,7 +91,8 @@ public class TextExtractor {
      */
     public String getBruttobetrag() {
         String pattern = "(?<=Betrag.{5})[0-9'.]*";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     /**
@@ -104,17 +108,20 @@ public class TextExtractor {
      */
     public String getWechselkurs() {
         String pattern = "(?<=Umrechnungskurs.{9})[0-9'.]*";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     public String getGebuehren(){
         String pattern = "(?<=Gebühren.{5})[0-9'.]*";
-        return "";
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     public String getSteuern(){
         String pattern = "(?<=Stempelsteuer.{5})[0-9'.]*";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     /**
@@ -122,12 +129,14 @@ public class TextExtractor {
      */
     public String getAktienKurs()  {
         String pattern = "(?<=Kurs: .{3} )[0-9'.]*";
-        return searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     public String getKursWaehrung()  {
         String pattern = "(?<=Kurs: )\\w{3}";
-        return searchRegex(pattern);
+        return  searchRegex(pattern);
+
     }
 
     /**
@@ -217,4 +226,12 @@ public class TextExtractor {
 
         return document;
     }
+
+    String formatNumber(String result) {
+        if(result == null){
+            return null;
+        }
+        return result.replaceAll("'","");
+    }
+
 }

@@ -19,7 +19,8 @@ public class TextExtractorDividende extends TextExtractor{
 
     public String getAusschuettung(){
         String pattern = "(?<=Ausschüttung: .{3} )[0-9'.]*";
-        return super.searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return formatNumber(result);
     }
 
     public String getAusschuettungWaehrung(){

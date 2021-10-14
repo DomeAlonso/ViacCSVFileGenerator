@@ -52,22 +52,27 @@ public class ViacPdfModifier {
                    case VERKAUF:
                    case KAUF:
                        document = extractor.getdocument();
+                       Validator.validate(document);
                        portfolios.get(Integer.parseInt(document.getPortfolio())).writeTransaction((DepotTransaktion) document,"");
                        break;
                    case EINLAGE:
                        document = extractor.getdocument();
+                       Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
                        break;
                    case ZINS:
                        document = new TextExtractorZins(pdfText).getdocument();
+                       Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Zins Portfolio "+document.getPortfolio()+". ");
                        break;
                    case VERWALTUNGSGEBUEHREN:
                        document = extractor.getdocument();
+                       Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Verwaltungsgebühren Portfolio "+document.getPortfolio()+". ");
                        break;
                    case DIVIDENDE:
                        document = new TextExtractorDividende(pdfText).getdocument();
+                       Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktionDividende) document, "Dividende Portfolio "+document.getPortfolio()+". ");
                        break;
                }

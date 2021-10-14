@@ -16,7 +16,8 @@ public class TextExtractorZins extends TextExtractor {
     @Override
     public String getVerrechneterBetrag() {
         String pattern = "(?<=Verrechneter Betrag: .{4})[0-9'.]*";
-        return super.searchRegex(pattern);
+        String result = searchRegex(pattern);
+        return super.formatNumber(result);
     }
 
     /**
