@@ -23,7 +23,8 @@ Da diese Zahlen zur Berechnung der Stückzahl verwendet werden, hat die Stückza
 
 ## Anleitung
 ### Vorbedingungen
-Das Helferlein ist darauf ausgerichtet, ein Depot in Portfolio Performance pro VIAC Portfolio abzubilden, welche sich ein gemeinsames Referenzkonto teilen.
+Das Helferlein ist darauf ausgerichtet, ein Depot in Portfolio Performance pro VIAC Portfolio abzubilden, welche sich ein gemeinsames Referenzkonto teilen.  
+![Portfolio Performance Depot Example](/docs/PP_example.jpg)
 
 ### Schritt für Schritt Anleitung
 - Aktuellste Version hier herunterladen.
@@ -33,6 +34,7 @@ Anschliessend erscheint eine Meldung ob die Generierung fehlerfrei geklappt hat.
 **Sollte der Import einer Datei nicht geklappt haben, kann ein Issue erstellt werden.**
 - In Portfolio Performance über `File -> Import -> CSV` files eines der generierten Dateien auswählen.
 - Für Referenzkonto, als Datentyp `Kontoumsätze` auswählen. Für alle anderen Dateien `Kontoumsätze`. Trennzeichen `Komma (,)`, Enkodierung `windows-1252`. Danach kontrollieren, dass alle Spalten richtig gemappt wurden. _Alternativ können auch über das Zahnrad die folgenden Konfigurationen importiert werden._
+![Portfolio Performance Import Settings](/docs/ImportSettings.jpg)
 - Im nächsten Schritt nicht vergessen das Depot und das Referenzkonto anzupassen. Importiert man Kontoumsätze kann eines der VIAC Depots ausgewählt werden.
 
 ## Unterstützte Dokumente
