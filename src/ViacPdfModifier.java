@@ -73,7 +73,7 @@ public class ViacPdfModifier {
                    case DIVIDENDE:
                        document = new TextExtractorDividende(pdfText).getdocument();
                        Validator.validate(document);
-                       portfolios.get(0).writeTransaction((KontoTransaktionDividende) document, "Dividende Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(0).writeTransaction((KontoTransaktionDividende) document, ((KontoTransaktionDividende) document).getDividendenart() +" Portfolio "+document.getPortfolio()+". ");
                        break;
                }
 

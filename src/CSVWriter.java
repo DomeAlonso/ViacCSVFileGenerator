@@ -71,7 +71,7 @@ public class CSVWriter {
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
-                    add(notiz+"Generiert von VIAC PDF Modifier");
+                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
 
             fileWriter.write(joiner.toString().replaceAll("null",""));
             fileWriter.write("\n");

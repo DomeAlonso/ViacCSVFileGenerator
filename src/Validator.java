@@ -102,8 +102,12 @@ public class Validator {
                 Double.parseDouble(depot.getAusschuettung());
             }
 
-            if (depot.getAusschuettungWaehrung() == null || depot.getAusschuettungWaehrung() .length() != 3){
+            if (depot.getAusschuettungWaehrung() == null || depot.getAusschuettungWaehrung().length() != 3){
                 throw new Exception("Error parsing Buchungswährung");
+            }
+
+            if (depot.getDividendenart() == null || depot.getDividendenart().equals("")){
+                throw new Exception("Error parsing Dividendenart.");
             }
         }
         return true;

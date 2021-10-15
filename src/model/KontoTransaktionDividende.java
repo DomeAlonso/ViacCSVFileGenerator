@@ -7,6 +7,7 @@ public class KontoTransaktionDividende extends KontoTransaktion{
     private String umrechnungskurs;
     private String ausschuettung;
     private String ausschuettungWaehrung;
+    private String dividendenart;
 
 
     public String getBetrag() {
@@ -47,5 +48,13 @@ public class KontoTransaktionDividende extends KontoTransaktion{
 
     public void setAusschuettungWaehrung(String ausschuettungWaehrung) {
         this.ausschuettungWaehrung = ausschuettungWaehrung;
+    }
+
+    public String getDividendenart() {
+        return dividendenart;
+    }
+
+    public void setDividendenart(String dividendenart) {
+        this.dividendenart = dividendenart;
     }
 }

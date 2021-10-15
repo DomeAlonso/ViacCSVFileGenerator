@@ -24,7 +24,12 @@ public class TextExtractorDividende extends TextExtractor{
     }
 
     public String getAusschuettungWaehrung(){
-        String pattern = "(?<=Ausschüttung: )[0-9'.]*";
+        String pattern = "(?<=Ausschüttung: )\\w{3}";
+        return super.searchRegex(pattern);
+    }
+
+    public String getDividendenart(){
+        String pattern = "(?<=Dividendenart: ).*";
         return super.searchRegex(pattern);
     }
 
@@ -46,6 +51,7 @@ public class TextExtractorDividende extends TextExtractor{
         ((KontoTransaktionDividende) document).setValutaDatum(getDatum());
         ((KontoTransaktionDividende) document).setVerrechneterBetrag(getVerrechneterBetrag());
         ((KontoTransaktionDividende) document).setBuchungsWaehrung(getBuchungswaehrung());
+        ((KontoTransaktionDividende) document).setDividendenart(getDividendenart());
         return document;
     }
 }
