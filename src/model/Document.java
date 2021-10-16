@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Abstract class containing the main document fields
+ */
 public abstract class Document {
     private String portfolio;
     private String valutaDatum;

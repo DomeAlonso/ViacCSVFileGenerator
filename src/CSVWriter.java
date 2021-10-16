@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.StringJoiner;
 
+/**
+ * Class creating and writing to csv files
+ */
 public class CSVWriter {
 
     FileWriter fileWriter = null;
@@ -45,7 +48,7 @@ public class CSVWriter {
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
-                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
+                    add(notiz +"Generiert von VIAC CSV Generator am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
 
             fileWriter.write(joiner.toString().replaceAll("null",""));
             fileWriter.write("\n");
@@ -71,7 +74,7 @@ public class CSVWriter {
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
-                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
+                    add(notiz +"Generiert von VIAC CSV Generator am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
 
             fileWriter.write(joiner.toString().replaceAll("null",""));
             fileWriter.write("\n");
@@ -97,7 +100,7 @@ public class CSVWriter {
                     add(doc.getSteuern()).
                     add(String.valueOf(doc.getAnzahl())).
                     add(doc.getIsin()).
-                    add(notiz +"Generiert von VIAC PDF Modifier am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
+                    add(notiz +"Generiert von VIAC CSV Generator am "+ DateTimeFormatter.ofPattern("dd.MM.YYYY").format(LocalDateTime.now()));
 
             fileWriter.write(joiner.toString().replaceAll("null",""));
             fileWriter.write("\n");

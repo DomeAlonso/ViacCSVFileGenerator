@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Document representing buying or selling a stock.
+ * Document for buying or selling a stock.
  */
 public class DepotTransaktion extends Document {
 

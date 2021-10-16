@@ -1,6 +1,8 @@
 import javax.swing.*;
 
-
+/**
+ * Notification window shown when finished, including a list of files where Exceptions occured.
+ */
 public class Output {
 
     String title = "Viac CSV File Generator Finished";

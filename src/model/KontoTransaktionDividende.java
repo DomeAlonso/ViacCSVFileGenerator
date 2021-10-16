@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Document for receiving dividends
+ */
 public class KontoTransaktionDividende extends KontoTransaktion{
 
     private String betrag;

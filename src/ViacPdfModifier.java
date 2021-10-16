@@ -13,8 +13,6 @@ import java.util.List;
 
 public class ViacPdfModifier {
 
-
-
    public static void main(String args[]) throws IOException {
 
        StringBuilder errorString = new StringBuilder();
@@ -22,7 +20,7 @@ public class ViacPdfModifier {
 
        //Initialize CSV Export
        ArrayList<CSVWriter> portfolios = new ArrayList<>();
-       portfolios.add(new CSVWriter("Abrechnungskonto"));
+       portfolios.add(new CSVWriter("Referenzkonto"));
        for (int i = 1; i <= 5; i++) {
            portfolios.add(new CSVWriter("0"+i));
        }
