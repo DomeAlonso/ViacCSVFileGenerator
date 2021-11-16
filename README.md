@@ -32,8 +32,8 @@ Das Helferlein ist darauf ausgerichtet, ein Depot in Portfolio Performance pro V
 - JAR-Datei ausführen. Anschliessend werden mehrere CSV-Dateien generiert. _(Es werden immer CSV-Dateien für 5 Depots generiert. Besitzt man in VIAC weniger Portfolios, bleiben die anderen CSV-Dateien leer und können ignoriert werden.)_  
 Anschliessend erscheint eine Meldung ob die Generierung fehlerfrei geklappt hat.  
 **Sollte der Import einer Datei nicht geklappt haben, kann ein Issue erstellt werden.**
-- In Portfolio Performance über `File -> Import -> CSV` files eines der generierten Dateien auswählen.
-- Für Referenzkonto, als Datentyp `Kontoumsätze` auswählen. Für alle anderen Dateien `Kontoumsätze`. Trennzeichen `Komma (,)`, Enkodierung `windows-1252`. Danach kontrollieren, dass alle Spalten richtig gemappt wurden. _Alternativ können auch über das Zahnrad die folgenden Konfigurationen importiert werden._
+- In Portfolio Performance über `File -> Import -> CSV files` eines der generierten Dateien auswählen.
+- Für Referenzkonto, als Datentyp `Kontoumsätze` auswählen. Für alle anderen Dateien `Depotumsätze`. Trennzeichen `Komma (,)`, Enkodierung `windows-1252`. Danach kontrollieren, dass alle Spalten richtig gemappt wurden. _Alternativ können auch über das Zahnrad die folgenden Konfigurationen importiert werden._
 ![Portfolio Performance Import Settings](/docs/ImportSettings.jpg)
 - Im nächsten Schritt nicht vergessen das Depot und das Referenzkonto anzupassen. Importiert man Kontoumsätze kann eines der VIAC Depots ausgewählt werden.
 
