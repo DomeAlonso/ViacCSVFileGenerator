@@ -38,6 +38,18 @@ public class ViacPdfModifier {
            }
        }
 
+       //For debugging purposes PDF's can be printed to console.
+       if(args.length >0){
+           if (args[0].toLowerCase().equals("debug")) {
+               for (File pdfFile : pdfFiles) {
+                   System.out.println("Handling file: " + pdfFile.getAbsolutePath() + "\n");
+                   System.out.println(VIACReader.readFile(pdfFile));
+               }
+               return;
+           }
+       }
+
+
        //Proccess PDF
        for (File file: pdfFiles) {
            try{

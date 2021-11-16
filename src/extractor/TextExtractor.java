@@ -46,7 +46,7 @@ public class TextExtractor {
                 return OrderType.VERKAUF;
             }
         }else{
-            pattern = "(?<=Basel, .{10}\\r\\n).*";
+            pattern = "(?<=Basel, .{10}(\\r)?\\n).*";
             typ = searchRegex(pattern);
             if (typ!=null) {
                 if (typ.equals("Einzahlung 3a")){
@@ -57,7 +57,7 @@ public class TextExtractor {
                     return OrderType.VERWALTUNGSGEBUEHREN;
                 }
             }
-            pattern = "Dividendenausschüttung(?=\\r\\nWir haben für Sie)";
+            pattern = "Dividendenausschüttung(?=(\\r)?\nWir haben für Sie)";
             typ = searchRegex(pattern);
             if (typ!=null && typ.equals("Dividendenausschüttung")){
                 return OrderType.DIVIDENDE;
