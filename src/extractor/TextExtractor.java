@@ -119,7 +119,7 @@ public class TextExtractor {
     }
 
     public String getSteuern(){
-        String pattern = "(?<=Stempelsteuer.{5})[0-9'.]*";
+        String pattern = "(?<=Stempelsteuer.{5})-?[0-9'.]*";
         String result = searchRegex(pattern);
         return formatNumber(result);
     }

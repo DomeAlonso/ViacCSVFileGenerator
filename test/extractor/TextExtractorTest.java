@@ -181,4 +181,39 @@ public class TextExtractorTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testVerkauf(){
+        String docText = "Portfolio 3.333.333.333.03\n" +
+                "Basel, 31.12.2021\n" +
+                "Börsenabrechnung - Verkauf\n" +
+                "Wir haben für Sie folgenden Auftrag ausgeführt:\n" +
+                "Order: Verkauf\n" +
+                "0.013 Ant UBS ETF MSCI Pacific SRI\n" +
+                "ISIN: LU0629460832\n" +
+                "Kurs: USD 84.44\n" +
+                "Betrag USD 1.11\n" +
+                "Umrechnungskurs CHF/USD 0.92048 CHF 0.85\n" +
+                "Stempelsteuer CHF -0.00\n" +
+                "Verrechneter Betrag: Valuta 31.12.2021 CHF 1.00";
+
+
+        try{
+            DepotTransaktion doc = (DepotTransaktion) new TextExtractor(docText).getdocument();
+            Assertions.assertEquals("03",doc.getPortfolio(),"Portfolio");
+            Assertions.assertEquals(0.013,(double) Math.round(doc.getAnzahl() * 1000d) / 1000d,"Anzahl");
+            Assertions.assertEquals("LU0629460832",doc.getIsin(),"ISIN");
+            Assertions.assertEquals("84.44",doc.getAktienKurs(),"Aktienkurs");
+            Assertions.assertEquals("USD",doc.getKursWaehrung(),"Aktienkurs Währung");
+            Assertions.assertEquals("1.11",doc.getBetrag(),"Betrag");
+            Assertions.assertEquals("USD",doc.getBetragsWaehrung(),"Betrag Waherung");
+            Assertions.assertEquals("0.92048",doc.getUmrechnungskurs(),"Umrechnungskurs");
+            Assertions.assertEquals("-0.00",doc.getSteuern(),"Steuern");
+            Assertions.assertEquals("1.00",doc.getVerrechneterBetrag(),"Verrechneter Betrag");
+            Assertions.assertEquals("31.12.2021",doc.getValutaDatum(),"Datum");
+        } catch (Exception e) {
+            Assertions.fail();
+            e.printStackTrace();
+        }
+    }
 }
