@@ -20,9 +20,12 @@ public class ViacPdfModifier {
 
        //Initialize CSV Export
        ArrayList<CSVWriter> portfolios = new ArrayList<>();
-       portfolios.add(new CSVWriter("Referenzkonto"));
+       portfolios.add(new CSVWriter("mit gemeinsamen Referenzkonto"));
        for (int i = 1; i <= 5; i++) {
            portfolios.add(new CSVWriter("0"+i));
+       }
+       for (int i = 1; i <= 5; i++) {
+           portfolios.add(new CSVWriter("0"+i+" Referenzkonto"));
        }
 
        //Get PDFs in directory
@@ -69,21 +72,25 @@ public class ViacPdfModifier {
                        document = extractor.getdocument();
                        Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Einlage Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(Integer.parseInt(document.getPortfolio())+5).writeTransaction((KontoTransaktion) document, "");
                        break;
                    case ZINS:
                        document = new TextExtractorZins(pdfText).getdocument();
                        Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Zins Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(Integer.parseInt(document.getPortfolio())+5).writeTransaction((KontoTransaktion) document, "");
                        break;
                    case VERWALTUNGSGEBUEHREN:
                        document = extractor.getdocument();
                        Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktion) document, "Verwaltungsgebühren Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(Integer.parseInt(document.getPortfolio())+5).writeTransaction((KontoTransaktion) document, "");
                        break;
                    case DIVIDENDE:
                        document = new TextExtractorDividende(pdfText).getdocument();
                        Validator.validate(document);
                        portfolios.get(0).writeTransaction((KontoTransaktionDividende) document, ((KontoTransaktionDividende) document).getDividendenart() +" Portfolio "+document.getPortfolio()+". ");
+                       portfolios.get(Integer.parseInt(document.getPortfolio())+5).writeTransaction((KontoTransaktionDividende) document, "");
                        break;
                }
 

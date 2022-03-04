@@ -21,11 +21,7 @@ public class CSVWriter {
         try {
             File csvFile = new File("Portfolio "+portfolio+".csv");
             fileWriter = new FileWriter(csvFile);
-            /*if (portfolio.equals("Abrechnungskonto")){
-                fileWriter.write("Datum,Typ,Wert,Buchungswährung,Steuern,Stück,ISIN,Notiz");
-            }else{*/
-                fileWriter.write("Datum,Typ,Wert,Buchungswährung,Bruttobetrag,Währung Bruttobetrag,Wechselkurs,Gebühren,Steuern,Stück,ISIN,Notiz");
-            //}
+            fileWriter.write("Datum,Typ,Wert,Buchungswährung,Bruttobetrag,Währung Bruttobetrag,Wechselkurs,Gebühren,Steuern,Stück,ISIN,Notiz");
             fileWriter.write("\n");
             fileWriter.flush();
         } catch (IOException e) {
