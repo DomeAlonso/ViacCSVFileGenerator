@@ -51,6 +51,29 @@ public class TextExtractorTest {
                 "Umrechnungskurs CHF/USD 0.9024 CHF 0.11\n" +
                 "Gutgeschriebener Betrag: Valuta 01.08.2021 CHF 0.11\n" +
                 "S. E. & O.";
+
+        dividendChecks(docDividende);
+
+    }
+
+    @Test
+    public void testDividendeMitUmbrungInWechselkurs(){
+        String docDividende = "Portfolio 1.123.123.123.03\n" +
+                "Dividendenausschüttung\n" +
+                "Wir haben für Sie folgende Ausschüttung verbucht:\n" +
+                "Dividendenart: Ordentliche Dividende\n" +
+                "1.234 Ant UBS ETF MSCI Pacific SRI\n" +
+                "ISIN: LU0629460832\n" +
+                "Ausschüttung: USD 0.10\n" +
+                "Betrag USD 0.12\n" +
+                "Umrechnungskurs CHF/USD \n" +
+                "0.9024 CHF 0.11\n"+
+                "Gutgeschriebener Betrag: Valuta 01.08.2021 CHF 0.11\n" +
+                "S. E. & O.";
+        dividendChecks(docDividende);
+    }
+
+    private void dividendChecks(String docDividende){
         try{
             KontoTransaktionDividende doc = (KontoTransaktionDividende) new TextExtractorDividende(docDividende).getdocument();
             Assertions.assertEquals("03",doc.getPortfolio(),"Portfolio");
@@ -69,8 +92,8 @@ public class TextExtractorTest {
             Assertions.fail();
             e.printStackTrace();
         }
-
     }
+
 
     @Test
     public void testVerwaltungsgebuehr(){
@@ -216,4 +239,6 @@ public class TextExtractorTest {
             e.printStackTrace();
         }
     }
+
+
 }
