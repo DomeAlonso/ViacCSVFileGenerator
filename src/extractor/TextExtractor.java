@@ -108,7 +108,7 @@ public class TextExtractor {
      * Umrechungskurs
      */
     public String getWechselkurs() {
-        String pattern = "((?<=Umrechnungskurs.{9})[0-9'.]+)|((?<=Umrechnungskurs.{9}\\n)[0-9'.]+)"; //Second regex is in case Value is written on next line. See unit test testDividendeMitUmbrungInWechselkurs
+        String pattern = "((?<=Umrechnungskurs.{9})[0-9'.]+)|((?<=Umrechnungskurs.{9}(\\r)?\\n)[0-9'.]+)"; //Second regex is in case Value is written on next line. See unit test testDividendeMitUmbrungInWechselkurs
         String result = searchRegex(pattern);
         return formatNumber(result);
     }
