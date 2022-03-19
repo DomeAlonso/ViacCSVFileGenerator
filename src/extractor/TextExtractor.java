@@ -58,9 +58,9 @@ public class TextExtractor {
                     return OrderType.VERWALTUNGSGEBUEHREN;
                 }
             }
-            pattern = "Dividendenausschüttung(?=(\\r)?\nWir haben für Sie)";
+            pattern = "(Dividendenausschüttung|Rückerstattung Quellensteuer)(?=(\\r)?\nWir haben für Sie)";
             typ = searchRegex(pattern);
-            if (typ!=null && typ.equals("Dividendenausschüttung")){
+            if (typ!=null && (typ.equals("Dividendenausschüttung") | typ.equals("Rückerstattung Quellensteuer"))){
                 return OrderType.DIVIDENDE;
             }
         }

@@ -57,6 +57,47 @@ public class TextExtractorTest {
     }
 
     @Test
+    public void testRueckerstattungQuellensteuer(){
+        String docText =
+                "Portfolio 2.222.222.222.02\n" +
+                        "Basel, 01.03.2022\n" +
+                        "Freundliche Grüsse\n" +
+                        "Terzo Vorsorgestiftung\n" +
+                        "Anzeige ohne Unterschrift\n" +
+                        "Herr\n" +
+                        "Rückerstattung Quellensteuer\n" +
+                        "Wir haben für Sie folgende Ausschüttung verbucht:\n" +
+                        "Dividendenart: Rückerstattung Quellensteuer\n" +
+                        "1.5 Ant UBS ETF SLI\n" +
+                        "ISIN: CH0032912732\n" +
+                        "Ausschüttung: CHF 0.20\n" +
+                        "Betrag CHF 0.30\n" +
+                        " \n" +
+                        "Gutgeschriebener Betrag: Valuta 01.03.2022 CHF 0.30\n" +
+                        "S. E. & O.";
+
+        try{
+            KontoTransaktionDividende doc = (KontoTransaktionDividende) new TextExtractorDividende(docText).getdocument();
+            Assertions.assertEquals("02",doc.getPortfolio(),"Portfolio");
+            Assertions.assertEquals( OrderType.DIVIDENDE,doc.getOrderType(), "Order Type");
+            Assertions.assertEquals("Rückerstattung Quellensteuer",doc.getDividendenart(),"Dividendenart");
+            Assertions.assertEquals("CH0032912732",doc.getIsin(),"ISIN");
+            Assertions.assertEquals("0.20",doc.getAusschuettung(),"Ausschüttung Betrag");
+            Assertions.assertEquals("CHF",doc.getAusschuettungWaehrung(),"Währung Ausschüttung");
+            Assertions.assertEquals("0.30",doc.getBetrag(), "Betrag");
+            Assertions.assertEquals("CHF",doc.getBetragsWaehrung(),  "Buchungswähurng");
+            Assertions.assertEquals("0.30",doc.getVerrechneterBetrag(), "Gutgeschriebener Betrag");
+            Assertions.assertEquals("CHF",doc.getBuchungsWaehrung(),  "Gutgeschriebener Betrag Währung");
+            Assertions.assertEquals("01.03.2022",doc.getValutaDatum(),"Datum");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assertions.fail();
+
+        }
+    }
+
+
+    @Test
     public void testDividendeMitUmbrungInWechselkurs(){
         String docDividende = "Portfolio 1.123.123.123.03\n" +
                 "Dividendenausschüttung\n" +
@@ -239,6 +280,7 @@ public class TextExtractorTest {
             e.printStackTrace();
         }
     }
+
 
 
 }
