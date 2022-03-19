@@ -23,14 +23,20 @@ Da diese Zahlen zur Berechnung der Stückzahl verwendet werden, hat die Stückza
 
 ## Anleitung
 ### Vorbedingungen
-Das Helferlein ist darauf ausgerichtet, ein Depot in Portfolio Performance pro VIAC Portfolio abzubilden, welche sich ein gemeinsames Referenzkonto teilen.  
-![Portfolio Performance Depot Example](/docs/PP_example.jpg)
+Um das Helferlein einzusetzen müssen Depot und Kontos in Portfolio Performance bereits existieren. Die VIAC Kontos können auf zwei Arten abgebildet werden:
+#### Gemeinsames Referenzkonto 
+Pro Portfolio in VIAC ein Depot in Portfolio Performance erstellen, welches sich ein gemeinsames Referenzkonto teilen.  
+![Portfolio Performance Depot Example](/docs/PP_example1.jpg)
+#### Separate Referenzkontos
+Pro Portfolio in VIAC ebenfalls ein Depot in Portfolio Performance erstellen. Diesmal hat jedes Depot ein eigenes Referenzkonto. 
+![Portfolio Performance Depot Example](/docs/PP_example2.jpg)
 
 ### Schritt für Schritt Anleitung
-- Aktuellste Version der .jar Datei [hier](https://github.com/DomeAlonso/ViacCSVFileGenerator/releases/latest/download/ViacCSVGenerator-1.0.1.jar) herunterladen.
+- Aktuellste Version der .jar Datei [hier](https://github.com/DomeAlonso/ViacCSVFileGenerator/releases) herunterladen.
 - Die JAR-Datei zusammen mit den VIAC PDF-Dateien in einen leeren Ordner kopieren.
-- JAR-Datei ausführen. Anschliessend werden mehrere CSV-Dateien generiert. _(Es werden immer CSV-Dateien für 5 Depots generiert. Besitzt man in VIAC weniger Portfolios, bleiben die anderen CSV-Dateien leer und können ignoriert werden.)_  
-Anschliessend erscheint eine Meldung ob die Generierung fehlerfrei geklappt hat.  
+- JAR-Datei ausführen. Anschliessend werden mehrere CSV-Dateien generiert. _(Es werden immer CSV-Dateien für 5 Depots generiert. Besitzt man in VIAC weniger Portfolios, bleiben die anderen CSV-Dateien leer und können ignoriert werden.)_
+ Verwendet man separate Referenzkonto (siehe Vorbedingungen) benötigt man die Dateien `Portfolio 0X Referenzkonto`, für ein gemeinsames Referenzkonto die Datei `Portfolio mit gemeinsamen Referenzkonto`
+- Anschliessend erscheint eine Meldung ob die Generierung fehlerfrei geklappt hat.  
 **Sollte der Import einer Datei nicht geklappt haben, kann ein Issue erstellt werden.**
 - In Portfolio Performance über `File -> Import -> CSV files` eines der generierten Dateien auswählen.
 - Für Referenzkonto, als Datentyp `Kontoumsätze` auswählen. Für alle anderen Dateien `Depotumsätze`. Trennzeichen `Komma (,)`, Enkodierung `windows-1252`. Danach kontrollieren, dass alle Spalten richtig gemappt wurden. _Alternativ können auch über das Zahnrad [die folgenden Konfigurationen](https://github.com/DomeAlonso/ViacCSVFileGenerator/releases/latest/download/PortfolioPerformance_Import_Config-V1.0.0.zip) importiert werden._
@@ -44,7 +50,7 @@ Zurzeit sind folgenden Dokumente in Deutsch der 3a Säule unterstützt und getes
 - Einlage
 - Verwaltungsgebühren
 - Zins
-- Dividende  
+- Dividende (Ordentliche Dividende, Rückerstattung Quellensteuer)  
   
 **Sollte du Dokumente von VIAC erhalten haben, die noch nicht unterstützt werden, lass es mich mit einem neuen Issue wissen. Ich werde es anschliessend versuchen zu implementieren.  
 Falls Bedarf für andere Sprachen oder anderen Produkten von VIAC besteht, erfasse ebenfalls ein Issue.**
